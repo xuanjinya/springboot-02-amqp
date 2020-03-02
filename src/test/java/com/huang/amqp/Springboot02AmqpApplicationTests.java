@@ -3,6 +3,10 @@ package com.huang.amqp;
 import com.huang.amqp.bean.Book;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +22,21 @@ public class Springboot02AmqpApplicationTests {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    AmqpAdmin amqpAdmin;
+
+    //创建一个消息队列
+    @Test
+    public void createExchange() {
+        /*amqpAdmin.declareExchange(new DirectExchange("amqpadmin.exchange"));
+        System.out.println("创建完成！");*/
+        //创建一个队列
+        //amqpAdmin.declareQueue(new Queue("amqpadmin.queue", true));
+        //创建绑定规则
+        //amqpAdmin.declareBinding(new Binding("amqpadmin.queue", Binding.DestinationType.QUEUE, "amqpadmin.exchange", "amqp.haha", null));
+
+    }
 
     /*
      * 1.单播（点对点）
@@ -50,9 +69,8 @@ public class Springboot02AmqpApplicationTests {
     @Test
     public void sendMsg() {
 //      rabbitTemplate.convertAndSend("exchange.fanout", new Book("三国演义", "罗贯中"));
-        rabbitTemplate.convertAndSend("exchange.fanout","", new Book("西游记", "吴承恩"));
+        rabbitTemplate.convertAndSend("exchange.fanout", "", new Book("西游记", "吴承恩"));
     }
-
 
 
 }
